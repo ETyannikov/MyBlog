@@ -8,7 +8,4 @@ ActiveRecord::Base.establish_connection(
   :database => "db/#{ENV['SINATRA_ENV']}.sqlite"
 )
 
-require 'sinatra/base'
-require 'sinatra/reloader'
-
-
+require_all 'app'
