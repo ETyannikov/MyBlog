@@ -1,5 +1,7 @@
 <% @posts.each do |bpost|%>
 <br>
-<%= bpost.title %>
+<h2><a href="/posts/<%= bpost.id %>"><%= bpost.title %></a></h2>
+<p><%= bpost.body %></p>
+
 <br>
 <% end %>

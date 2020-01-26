@@ -8,13 +8,20 @@ class PostController < Sinatra::Base
   end
   
   get "/posts" do 
-    @posts = Post.all
+    @posts = Post.all.reverse
     erb :'posts/index'
   end
   
   get "/posts/new" do
     erb :'posts/new'
   end
+  
+  get "/posts/:id" do
+    @post = Post.find(params["id"])
+    erb :'posts/show'
+  end
+  
+
   
   post "/posts" do
     bpost = Post.new(params)
