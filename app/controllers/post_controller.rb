@@ -7,29 +7,59 @@ class PostController < Sinatra::Base
     set :views, 'app/views'
   end
   
+  def valid?(param)
+    if param["title"].empty? || param["body"].empty?
+      false
+    else
+      true
+    end
+  end
+  
+  #index
   get "/posts" do 
     @posts = Post.all.reverse
     erb :'posts/index'
   end
   
+  #new
   get "/posts/new" do
     erb :'posts/new'
   end
   
+  #show
   get "/posts/:id" do
     @post = Post.find(params["id"])
     erb :'posts/show'
   end
   
-
-  
+  #new save
   post "/posts" do
-    bpost = Post.new(params)
-    if bpost.save 
-        redirect "/posts" 
-      else
-        erb :'posts/new'
+    if valid?(params)
+    @post = Post.new(params)
+    @post.save
+    redirect "/posts"
+    else
+      erb :'posts/new'
     end
   end
-
+  
+  #edit
+  get "/posts/:id/edit" do
+    @post = Post.find(params["id"])
+    erb :'posts/edit'
+  end
+  
+  #update
+  patch "/posts/:id" do
+    @post = Post.find(params["id"])
+    @post.update(title: params["title"], body: params["body"], image: params["image"])
+    redirect "/posts/#{@post.id}"
+  end
+  
+  #delete
+  delete '/posts/:id' do 
+    @post = Post.find(params["id"])
+    @post.delete
+    redirect to '/posts'
+  end
 end
