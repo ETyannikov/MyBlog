@@ -1,6 +1,6 @@
 require './config/environment'
 
-class PostController < Sinatra::Base
+class PostController < ApplicationController
 
   configure do
     set :public_folder, 'public'
@@ -14,6 +14,7 @@ class PostController < Sinatra::Base
       true
     end
   end
+
   
   #index
   get "/posts" do 
@@ -35,9 +36,9 @@ class PostController < Sinatra::Base
   #new save
   post "/posts" do
     if valid?(params)
-    @post = Post.new(params)
-    @post.save
-    redirect "/posts"
+      @post = Post.new(params)
+      @post.save
+      redirect "/posts"
     else
       erb :'posts/new'
     end
@@ -52,14 +53,18 @@ class PostController < Sinatra::Base
   #update
   patch "/posts/:id" do
     @post = Post.find(params["id"])
-    @post.update(title: params["title"], body: params["body"], image: params["image"])
-    redirect "/posts/#{@post.id}"
+    if valid?(params)
+      @post.update(title: params["title"], body: params["body"], image: params["image"])
+      redirect "/posts/#{@post.id}"
+    else
+      redirect "/posts/#{@post.id}/edit"
+    end
   end
   
   #delete
   delete '/posts/:id' do 
     @post = Post.find(params["id"])
-    @post.delete
-    redirect to '/posts'
+    @post.destroy
+    redirect '/posts'
   end
 end
