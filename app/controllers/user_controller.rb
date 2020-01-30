@@ -13,12 +13,15 @@ class UserController < ApplicationController
   
   post "/users" do
     @user = User.new(params)
-    if @user.username.empty? || @user.password1.empty?
-      redirect "/users/new"
-    elsif @user.password1 != @user.password2
-      redirect "/users/new"
+    if params["username"].empty? || params["password"].empty?
+      @error = "Username or password can't be blank"
+      erb :"/users/new"
+    elsif User.find_by username: (params["username"])
+      @error = "That username is already taken"
+      erb :"/users/new"
     else
       @user.save
+      session[:user_id] = @user.id
       redirect "/posts"
     end
   end

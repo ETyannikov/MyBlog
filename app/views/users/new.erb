@@ -1,17 +1,13 @@
 <header>
   <h1>Create a new User Account!</h1>
-  
 </header>
-
+<p><%= @error %></p>
 <form action="/users" method="post">
   <label>Username:</label>
   <input type="text" name=username>
   
   <label>Password:</label>
-  <input type="text" name=password1>
-  
-  <label>Re-enter password:</label>
-  <input type="text" name=password2>
+  <input type="text" name=password>
   
   <input type="submit"></input>
 </form>
