@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'sinatra' , :require => 'sinatra/base'
 gem 'sinatra-reloader', :require => false
-gem 'activerecord', '~> 4.2', '>= 4.2.6', :require => 'active_record'
+gem 'activerecord', '~> 5.2', :require => 'active_record'
 gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'rake'
 gem 'require_all'
